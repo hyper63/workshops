@@ -64,8 +64,56 @@ required components to build a http Request to the hyper service.
 The protocol can be either `http` for local hyper, `https` for custom hyper, or `cloud` for
 the hyper cloud service. The `key` and `secret` are part of creating the `JWT` or jsonwebtoken.
 The `key` is the `sub` claim in the token, and the `secret` is used to sign the token. The
-`host` is the domain name of the service and the `app` is the application name of the hyper 
-service.
+`host` is the domain name of the service and the `app` is the application name of hyper services.
+
+hyper-connect uses the connection string and your command to create the http client request. A 
+request is an object that instructs the http client how to submit to a server.
+
+> 🎓 For more information about the Request object - https://developer.mozilla.org/en-US/docs/Web/API/Request
+
+For example, if I call `await hyper.data.update(...)` hyper-connect takes the connection string information and the command information `hyper.[service].[action]` and constructs a http request.
+
+```
+PUT /data/mario-wiki-dev/1
+Host: localhost:6363
+Content-Type: application/json
+Authorization: Bearer ${token}
+
+{
+  "id": "1",
+  "name": "Mario",
+  "description": "Better description"
+}
+```
+
+hyper-connect also handles the response and returns the result, if the response is not a 2XX response,
+then a rejected promise is returned with the error supplied as the argument in the catch function.
+
+---
+
+## Update a Character
+
+In the previous workshop, we learned how to add a document to hyper and to retrieve a document from hyper, in this workshop, we will learn how to update a document. The update method for hyper.data takes two arguments, an identifier and the updated document. hyper completely replaces the document, so you must 
+send a full document to hyper. 
+
+> QUESTION: Why does hyper take the entire document to perform an update? This is intentional by design
+> You should keep your documents small and domain focused, this allows for better scale. If you want
+> to learn more about document database design check out this blog post https://blog.hyper.io/document-database-design 
+
+
+
+
+---
+
+## Remove a Character
+
+---
+
+## List Characters
+
+
+
+
 
 
 
