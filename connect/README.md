@@ -8,6 +8,7 @@
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [What is hyper-connect?](#what-is-hyper-connect?)
+- [Setup](#setup)
 - [Update a character](#update-a-character)
 - [Remove a character](#remove-a-character)
 - [List characters](#list-characters)
@@ -91,6 +92,27 @@ then a rejected promise is returned with the error supplied as the argument in t
 
 ---
 
+## Setup
+
+Before we get started coding, we need to initialize our project. Run the setup script to
+
+* Download and run a hyper instance
+* Create a hyper data service using the app name `mario-wiki-dev`
+
+``` sh
+cd connect
+./scripts/setup.sh
+```
+
+In another terminal lets start our API server:
+
+``` sh
+cd connect
+./scripts/start.sh
+```
+
+---
+
 ## Update a Character
 
 In the previous workshop, we learned how to add a document to hyper and to retrieve a document from hyper, in this workshop, we will learn how to update a document. The update method for hyper.data takes two arguments, an identifier and the updated document. hyper completely replaces the document, so you must 
@@ -100,20 +122,132 @@ send a full document to hyper.
 > You should keep your documents small and domain focused, this allows for better scale. If you want
 > to learn more about document database design check out this blog post https://blog.hyper.io/document-database-design 
 
+In the `api/update-character.js` file, lets re-write the updateCharacter API handler:
 
+``` js
+import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.7/proxy.js'
 
+export default async function(req, res) {
+  const result = await hyper.data.update(req.params.id, req.body)
+  return res.send(result)
+}
+```
+
+To verify the update is successful, lets use curl to send an update:
+
+In a new terminal window:
+
+``` sh
+curl -X PUT localhost:3000/api/characters/1 \
+-H 'Content-Type: application/json' \
+-d '{"id": "1", "type": "character", "name": "Mario", "description": "updating mario document" }'
+```
 
 ---
 
 ## Remove a Character
 
+To remove a document from a hyper data service, we will use the `data.remove` method. In `api/remove-character.js` lets re-write the function like so:
+
+``` js
+import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.7/proxy.js'
+
+export default async function(req, res) {
+  const result = await hyper.data.remove(req.params.id)
+  return res.send(result)
+}
+
+```
+
+And we can verify using curl
+
+``` sh
+curl -X DELETE localhost:3000/api/characters/1
+```
+
 ---
 
 ## List Characters
 
+In order to showcase the list command, we need to seed the database with a bunch of Mario
+Universe characters. Let use the seed script to do this:
+
+``` sh
+./scripts/setup.sh
+```
+
+> NOTE: You can run `./scripts/setup.sh` multiple times in case you get your data out of wack, it will
+> reseed your data service with the characters.json file. Make sure you are in the `connect` folder in
+> your terminal.
+
+The list method for the hyper data service gives several options:
+
+* list all with default limit of 1000
+* list with specified limit
+* list using a range - start, end
+* list by specific keys
+
+### List all example
+
+``` js
+const xs = await hyper.data.list()
+```
+
+### List with a specific limit
+
+``` js
+const xs = await hyper.data.list({limit: 10})
+```
+
+### List with a key range
+
+``` js
+const xs = await hyper.data.list({start: '2', end: '3' })
+```
+
+### List with a set of keys
+
+``` js
+const xs = await hyper.data.list({keys: ['1', '3', '4']})
+```
+
+For our API, we are going to list all of the documents, then filter 
+documents that are type 'character'
+
+In your editor open `api/list-characters.js` and re-write the function:
+
+``` js
+import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+
+const byType = doctype => doc => doc.type === doctype
+
+export default async function (_req, res) {
+  const docs = await hyper.data.list()
+  const characters = docs.filter(byType('character'))
+  return res.send(characters)
+}
+```
+
+To verify, lets use a curl command:
+
+``` sh
+curl localhost:3000/api/characters | npx prettyjson
+```
 
 
+## Summary
 
+In this workshop, we learned about hyper-connect, and we learned how to use hyper-connect
+data api to update, remove and list documents from a hyper Data service.
+
+hyper Data service gives you common document db methods to work with document data, you will 
+notice some common practices when working with document data. For example, every document has
+a `type` property that basically lets the developer what type of document it is. 
+
+By keeping your data service general you business logic and rules reside in your application layer,
+which means that many changes can occur in just that layer, without having to change rules in your
+data service. In the next workshops, we will talk more about some advanced functionality of the 
+data service.
 
 
 
