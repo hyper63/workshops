@@ -12,3 +12,4 @@ The best way to do these workshops is to use gitpod.io
 ## Workshops
 
 - [Hello World](/hello-world)
+- [Connect](/connect)
