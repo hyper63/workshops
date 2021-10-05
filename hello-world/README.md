@@ -119,6 +119,7 @@ Example:
 
 {
   "id": "1",
+  "type": "character",
   "name": "Mario",
   "description": "The most popular character in the Mario Universe"
 }
