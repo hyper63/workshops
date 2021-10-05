@@ -7,7 +7,7 @@
 
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
-- [What is hyper-connect?](#what-is-hyper-connect?)
+- [What is hyper-connect?](#what-is-hyper-connect)
 - [Setup](#setup)
 - [Update a character](#update-a-character)
 - [Remove a character](#remove-a-character)
@@ -19,16 +19,13 @@
 ## Introduction 
 
 👋🏻 Greetings, Thank you for taking the time to learn hyper with us, in this workshop, we
-will dive a little deeper into hyper-connect the deno/nodejs hyper client. But first, if you
-have not taken the [Hello World](../hello-world) workshop, please consider to take that workshop
+will dive a little deeper into `hyper-connect`, the deno/nodejs hyper client. But first, if you
+have not taken the [Hello World](../hello-world) workshop, please consider taking that workshop
 first, we will be building on the concepts we learned in previous workshops.
 
-> NOTE: Please be sure to take the [Hello World](../hello-world) workshop before taking this workshop.
+> You'll want to complete the [Hello World](../hello-world) workshop before taking this workshop.
 
-As we started in the hello-world workshop, we will be building out a "Mario Wiki API", and through these
-workshops, we will cover all of the hyper core services. The best way to learn is by doing, so in order 
-to get the most out of these workshops, take the time to actually do the work, not just watch or copy
-and paste.
+We'll continue building out the "Mario Wiki API". We will cover all of the core hyper services. The best way to learn is by doing. In order to get the most out of these workshops, take the time to actually do the work, not just watch or copy and paste.
 
 The hyper Data Service is a JSON API that focuses on Document Data Storage, document stores gives
 developers the ability to keep their business logic clean separated from their services. With our
@@ -49,7 +46,7 @@ What do I need to know to take this workshop?
 
 ---
 
-## What is hyper-connect?
+## What is hyper-connect ?
 
 hyper-connect is a deno/nodejs client module that you import into your application as a 
 dependency to provide some syntatic sugar to connect with the hyper API. The client takes
@@ -57,6 +54,10 @@ a connection string that is provided via an environment variable to build http c
 
 The connection string looks like a URL, because we leverage the `URL` parser to extract the
 required components to build a http Request to the hyper service.
+
+`hyper-connect` is a deno/nodejs client module that you import into your application as a 
+dependency to provide some syntactic sugar to connect with the hyper API. The client takes
+a connection string that is provided via an environment variable to build HTTP client calls.
 
 ```
 [protocol]://[key]:[secret]@[host]/[app]
@@ -67,12 +68,12 @@ the hyper cloud service. The `key` and `secret` are part of creating the `JWT` o
 The `key` is the `sub` claim in the token, and the `secret` is used to sign the token. The
 `host` is the domain name of the service and the `app` is the application name of hyper services.
 
-hyper-connect uses the connection string and your command to create the http client request. A 
-request is an object that instructs the http client how to submit to a server.
+`hyper-connect` uses the connection string and your command to create the HTTP client request. A request is an object that instructs the HTTP client on how to submit to a server.
 
 > 🎓 For more information about the Request object - https://developer.mozilla.org/en-US/docs/Web/API/Request
 
-For example, if I call `await hyper.data.update(...)` hyper-connect takes the connection string information and the command information `hyper.[service].[action]` and constructs a http request.
+For example, if I call `await hyper.data.update(...)`, `hyper-connect` takes the connection string information and the command information `hyper.[service].[action]` and constructs an HTTP request.
+
 
 ```
 PUT /data/mario-wiki-dev/1
@@ -87,16 +88,13 @@ Authorization: Bearer ${token}
 }
 ```
 
-hyper-connect also handles the response and returns the result, if the response is not a 2XX response,
-then a rejected promise is returned with the error supplied as the argument in the catch function.
+`hyper-connect` also handles the response and returns the result. If the response is not a 2XX response, a rejected promise is returned with the error supplied as the argument in the catch function.
 
 ---
 
 ## Setup
 
-Before we get started coding, we need to initialize our project. Run the setup script to
-
-* Download and run a hyper instance
+Before we get started coding, we need to initialize our project. Run the setup script to download and run a hyper instance:
 
 ``` sh
 cd connect
@@ -121,11 +119,11 @@ cd connect
 
 ## Update a Character
 
-In the previous workshop, we learned how to add a document to hyper and to retrieve a document from hyper, in this workshop, we will learn how to update a document. The update method for hyper.data takes two arguments, an identifier and the updated document. hyper completely replaces the document, so you must 
+In the previous workshop, we learned how to add a document to hyper and to retrieve a document from hyper. In this workshop, we will learn how to update a document. The update method for hyper.data takes two arguments, an identifier, and the updated document. hyper completely replaces the document, so you must 
 send a full document to hyper. 
 
-> QUESTION: Why does hyper take the entire document to perform an update? This is intentional by design
-> You should keep your documents small and domain focused, this allows for better scale. If you want
+> QUESTION: Why does hyper take the entire document to perform an update? This is intentional by design.
+> You should keep your documents small and domain-focused, this allows for better scale. If you want
 > to learn more about document database design check out this blog post https://blog.hyper.io/document-database-design 
 
 In the `api/update-character.js` file, lets re-write the updateCharacter API handler:
@@ -182,7 +180,7 @@ Universe characters. Let use the seed script to do this:
 ./scripts/setup.sh
 ```
 
-> NOTE: You can run `./scripts/setup.sh` multiple times in case you get your data out of wack, it will
+> NOTE: You can run `./scripts/setup.sh` multiple times in case you get your data out of whack, it will
 > reseed your data service with the characters.json file. Make sure you are in the `connect` folder in
 > your terminal.
 
@@ -243,13 +241,13 @@ curl localhost:3000/api/characters | npx prettyjson
 
 ## Summary
 
-In this workshop, we learned about hyper-connect, and we learned how to use hyper-connect
-data api to update, remove and list documents from a hyper Data service.
+In this workshop, we learned about `hyper-connect` and the data API to update, remove and list documents from a hyper Data service.
 
-hyper Data service gives you common document db methods to work with document data, you will 
-notice some common practices when working with document data. For example, every document has
+hyper Data service gives you common document DB methods to work with document data, you will notice some common practices when working with document data. For example, every document has
 a `type` property that basically lets the developer what type of document it is. 
 
+By keeping your data service general your business logic and rules reside in your application layer,
+many changes can occur in just that layer, without having to change rules in your data service. In the next workshops, we will talk more about some advanced functionality of the data service.
 By keeping your data service general you business logic and rules reside in your application layer,
 which means that many changes can occur in just that layer, without having to change rules in your
 data service. In the next workshops, we will talk more about some advanced functionality of the 
