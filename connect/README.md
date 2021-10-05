@@ -97,11 +97,17 @@ then a rejected promise is returned with the error supplied as the argument in t
 Before we get started coding, we need to initialize our project. Run the setup script to
 
 * Download and run a hyper instance
-* Create a hyper data service using the app name `mario-wiki-dev`
 
 ``` sh
 cd connect
-./scripts/setup.sh
+./scripts/hyper.sh
+```
+
+In another terminal lets setup our hyper data service:
+
+``` sh
+cd connect
+./scripts/setup.js
 ```
 
 In another terminal lets start our API server:
