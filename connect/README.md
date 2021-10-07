@@ -28,9 +28,8 @@ first, we will be building on the concepts we learned in previous workshops.
 We'll continue building out the "Mario Wiki API". We will cover all of the core hyper services. The best way to learn is by doing. In order to get the most out of these workshops, take the time to actually do the work, not just watch or copy and paste.
 
 The hyper Data Service is a JSON API that focuses on Document Data Storage, document stores gives
-developers the ability to keep their business logic clean separated from their services. With our
-JSON API, you can create, read, update and delete JSON Documents. In the previous workshop, we covered
-create and read, in this workshop, we will cover update, delete and list. 
+developers the ability to keep their business logic cleanly separated from the services tier. With our
+JSON API, you can create, read, update, delete, list, and query JSON Documents. In the previous workshop, we covered create and read, in this workshop, we will cover update, delete and list. 
 
 ---
 
@@ -48,16 +47,12 @@ What do I need to know to take this workshop?
 
 ## What is hyper-connect ?
 
-hyper-connect is a deno/nodejs client module that you import into your application as a 
+`hyper-connect` is a deno/esm nodejs client module that you import into your application as a 
 dependency to provide some syntatic sugar to connect with the hyper API. The client takes
 a connection string that is provided via an environment variable to build http client calls.
 
 The connection string looks like a URL, because we leverage the `URL` parser to extract the
 required components to build a http Request to the hyper service.
-
-`hyper-connect` is a deno/nodejs client module that you import into your application as a 
-dependency to provide some syntactic sugar to connect with the hyper API. The client takes
-a connection string that is provided via an environment variable to build HTTP client calls.
 
 ```
 [protocol]://[key]:[secret]@[host]/[app]
@@ -117,9 +112,9 @@ cd connect
 
 ---
 
-## Update a Character
+## Update Character
 
-In the previous workshop, we learned how to add a document to hyper and to retrieve a document from hyper. In this workshop, we will learn how to update a document. The update method for hyper.data takes two arguments, an identifier, and the updated document. hyper completely replaces the document, so you must 
+In the previous workshop, we learned how to add a document to `hyper` and to retrieve a document from `hyper`. In this workshop, we will learn how to update a document. The update method for hyper.data takes two arguments, an identifier, and the updated document. hyper completely replaces the document, so you must 
 send a full document to hyper. 
 
 > QUESTION: Why does hyper take the entire document to perform an update? This is intentional by design.
@@ -137,7 +132,7 @@ export default async function(req, res) {
 }
 ```
 
-To verify the update is successful, lets use curl to send an update:
+To verify the update is successful, let's use curl to send an update:
 
 In a new terminal window:
 
@@ -184,7 +179,7 @@ Universe characters. Let use the seed script to do this:
 > reseed your data service with the characters.json file. Make sure you are in the `connect` folder in
 > your terminal.
 
-The list method for the hyper data service gives several options:
+The list method for the `hyper` Data service gives several options:
 
 * list all with default limit of 1000
 * list with specified limit
@@ -246,8 +241,8 @@ In this workshop, we learned about `hyper-connect` and the data API to update, r
 hyper Data service gives you common document DB methods to work with document data, you will notice some common practices when working with document data. For example, every document has
 a `type` property that basically lets the developer what type of document it is. 
 
-By keeping your data service general your business logic and rules reside in your application layer,
-many changes can occur in just that layer, without having to change rules in your data service. In the next workshops, we will talk more about some advanced functionality of the data service.
+By keeping your data service general and your business logic in your application layer,
+many changes can occur in just that layer, without having to modify your data service. In the next workshops, we will talk more about some advanced functionality of the data service.
 By keeping your data service general you business logic and rules reside in your application layer,
 which means that many changes can occur in just that layer, without having to change rules in your
 data service. In the next workshops, we will talk more about some advanced functionality of the 
