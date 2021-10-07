@@ -124,7 +124,7 @@ send a full document to hyper.
 
 > QUESTION: Why does hyper take the entire document to perform an update? This is intentional by design.
 > You should keep your documents small and domain-focused, this allows for better scale. If you want
-> to learn more about document database design check out this blog post https://blog.hyper.io/document-database-design 
+> to learn more about document database design check out this blog post https://blog.hyper.io/document-database-design#assessment 
 
 In the `api/update-character.js` file, lets re-write the updateCharacter API handler:
 
