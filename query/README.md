@@ -1,6 +1,6 @@
 <h1 align="center">⚡️ hyper query workshop ⚡️</h1>
 <p align="center">In this workshop, we will explore the hyper Data query and bulk service methods. With these two powerful methods you can
-accomplish so much of your complex data needs without having to tightly couple your business logic to the persistant data service.</p>
+accomplish so much of your complex data needs without having to tightly couple your business logic to the persistent data service.</p>
 
 ---
 
