@@ -61,7 +61,41 @@ cd query
 
 ### Query
 
-* POST /api/characters/_query 
+As we continue to build our API, we want to provide the ability to find all the
+characters that made an appearance in a Mario Universe game. For example, which characters
+made an appearance in `Donkey Kong`? In our data store we have characters and we have games, each of these document types have a unique identifiers, and we have another document
+type called `appearances` these documents contain the game identifier and the character identifier to associate the characters with the games. Since a character can appear in multiple games and a game can have more than one character we need a special document 
+type that maps these associations. In our setup, we created some associations so that we could get started. In our API, we are going to create a new endpoint `characters/_query`, when the developer sends a post with a game_id specified, we will need to return all of the
+character names for a given game. 
+
+* POST /api/characters/_query?game_id=game-1
+
+In the `api/characters/_query.js` file, lets modify the `post` function to perform this
+query.
+
+``` js
+import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+
+export async function post(_req, res) {
+  // 📝 NOTE: you may want to check if the game_id document exists
+  // before running the query.
+  const result = await hyper.data.query({
+    type: 'appearance',
+    game_id: req.query.game_id
+  }, { fields: ['character_id', 'character_name'] })
+  
+  return res.send(result.docs)
+}
+```
+
+With `hyper.data.query` we can provide a query object that requests to filter all documents using the following criteria: the document type should equal 'appearance' and
+the document `game_id` should equal the `game_id` being provided on the query string. 
+
+### About the hyper.data.query method
+
+The query method is a powerful mechanism that enables you to write complex queries using
+object notation, which makes it easy to construct your filter using functions.
+
 
 * POST /api/games/_query
 
