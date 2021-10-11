@@ -11,6 +11,26 @@ The best way to do these workshops is to use gitpod.io
 
 ## Workshops
 
-- [Hello World](/hello-world)
-- [Connect](/connect)
-- [Query](/query)
+### Data
+
+- [✅ Hello World](/hello-world)
+- [✨ Connect](/connect)
+- [⚙️ Query](/query)
+
+### Storage
+
+- [🔮 Uploading Files](/upload)
+- [🔮 Downloading Files](/download)
+
+### Cache
+
+- [🔮 Counters](/counters)
+- [🔮 Hot Queries](/hot-queries)
+
+### Search
+
+- [🔮 Search](/search)
+
+### Queue
+
+- [🔮 Notifications](/notifications)
