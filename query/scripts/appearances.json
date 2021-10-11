@@ -1,0 +1,26 @@
+[
+  {
+    "id": "appearance-1",
+    "type": "appearance",
+    "game_id": "game-1",
+    "game_name": "Donkey Kong",
+    "character_id": "character-1",
+    "character_name": "Mario"
+  },
+  {
+    "id": "appearance-2",
+    "type": "appearance",
+    "game_id": "game-2",
+    "game_name": "Mario Bros",
+    "character_id": "character-1",
+    "character_name": "Mario"
+  },
+  {
+    "id": "appearance-3",
+    "type": "appearance",
+    "game_id": "game-2",
+    "game_name": "Mario Bros",
+    "character_id": "character-2",
+    "character_name": "Luigi"
+  }
+]

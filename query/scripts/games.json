@@ -1,0 +1,22 @@
+[
+  {
+    "id": "game-1",
+    "type": "game",
+    "name" "Donkey Kong"
+  },
+  {
+    "id": "game-2",
+    "type": "game",
+    "name": "Mario Bros"
+  },
+  {
+    "id": "game-3",
+    "type": "game",
+    "name": "Smash Bros"
+  },
+  {
+    "id": "game-4",
+    "type": "game",
+    "name": "Super Mario Bros"
+  }
+]

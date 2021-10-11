@@ -91,13 +91,40 @@ export async function post(_req, res) {
 With `hyper.data.query` we can provide a query object that requests to filter all documents using the following criteria: the document type should equal 'appearance' and
 the document `game_id` should equal the `game_id` being provided on the query string. 
 
-### About the hyper.data.query method
+#### About the hyper.data.query method
 
 The query method is a powerful mechanism that enables you to write complex queries using
 object notation, which makes it easy to construct your filter using functions.
 
+The method takes two arguments: selector and options
 
-* POST /api/games/_query
+#### Selector
+
+The selector argument is an object that describes how you would like to filter the store, so if you left it empty `{}` then you would retrieve all of the documents in the store. If you set it to `{ type: 'character' }` then you are asking hyper to only return the documents that contain a type property that equals 'character'. There are several operators that you can use when crafting your selector.
+
+Basically, when you provide the selector `{type: 'character' }`, you are using an implicit operator called `$eq` (equals) to instruct the hyper data store how you would like to filter the documents. `{ type: { $eq: 'character' }}`
+
+> To see more information about selectors [Read our docs](https://docs.hyper.io/query-selector)
+
+
+#### Options
+
+- fields - array of strings specifying the fields you would like to return in the results
+- limit - number of documents you would like to return
+- sort - array of objects specifying the properties you would like to sort on
+- use_index - string to specify a specific index to optimize the query.
+
+#### Exercise
+
+Now that we have created a feature to get all the characters by a game id, lets create a query
+to get all the games by a character id, in the `api/games/_query.js` modify the post function using hyper to get all of the game names and id's by querying the hyper data store.
+
+Test Case:
+
+``` sh
+curl -X POST localhost:3000/api/games/_query?character_id=character-1 | npx prettyjson
+```
+
 
 ### Bulk
 
