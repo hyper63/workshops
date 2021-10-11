@@ -13,3 +13,4 @@ The best way to do these workshops is to use gitpod.io
 
 - [Hello World](/hello-world)
 - [Connect](/connect)
+- [Query](/query)
