@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "type": "character",
+    "name": "Mario"
+  },
+  {
+    "id": "2",
+    "type": "character",
+    "name": "Luigi"
+  },
+  {
+    "id": "3",
+    "type": "character",
+    "name": "Princess Peach"
+  },
+  {
+    "id": "4",
+    "type": "character",
+    "name": "Bowser"
+  }
+]
