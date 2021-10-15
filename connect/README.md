@@ -89,24 +89,21 @@ Authorization: Bearer ${token}
 
 ## Setup
 
-Before we get started coding, we need to initialize our project. Run the setup script to download and run a hyper instance:
+Before we get started coding, we need to setup our project:
 
-``` sh
-cd connect
-./scripts/hyper.sh
+Login in to https://dashboard.hyper.io and go to your 'mario-wiki-[initials]' app and copy the connection string.
+
+Create a `.env` file in the connect folder and add your connection string as a HYPER env variable:
+
+```
+HYPER=[your connection string]
 ```
 
-In another terminal lets setup our hyper data service:
+In a terminal lets start our API server:
 
 ``` sh
 cd connect
-./scripts/setup.js
-```
-
-In another terminal lets start our API server:
-
-``` sh
-cd connect
+./scripts/setup.sh
 ./scripts/start.sh
 ```
 
@@ -124,7 +121,7 @@ send a full document to hyper.
 In the `api/update-character.js` file, lets re-write the updateCharacter API handler:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.7/proxy.js'
+import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.9/proxy.js'
 
 export default async function(req, res) {
   const result = await hyper.data.update(req.params.id, req.body)
@@ -149,7 +146,7 @@ curl -X PUT localhost:3000/api/characters/1 \
 To remove a document from a hyper data service, we will use the `data.remove` method. In `api/remove-character.js` lets re-write the function like so:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.7/proxy.js'
+import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.9/proxy.js'
 
 export default async function(req, res) {
   const result = await hyper.data.remove(req.params.id)
@@ -216,7 +213,7 @@ documents that are type 'character'
 In your editor open `api/list-characters.js` and re-write the function:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+import { hyper } from 'https://x.nest.land/hyper-connect@0.0.9/proxy.js'
 
 const byType = doctype => doc => doc.type === doctype
 

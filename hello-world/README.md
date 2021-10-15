@@ -22,9 +22,9 @@ and its games.
 
 In this intro to hyper, we will do the following:
 
-* Setup a developer hyper instance
-* use hyper to create a mario character document
-* use hyper to get a mario character document
+- [ ] Setup a developer hyper instance
+- [ ] use hyper to create a mario character document
+- [ ] use hyper to get a mario character document
 
 > 👉 Highly recommend using gitpod.io for this workshop, it will pre configure the workshop environment, 
 > if you do not want to use gitpod, see Appendix A
@@ -50,48 +50,19 @@ We will be using Deno as our server runtime, but you don't need to worry about t
 
 ## Setup 
 
-Lets setup a local hyper service:
+For our setup, we have two options, create an app on the hyper cloud or run a local instance of hyper.
 
-> In a new terminal window, type the following commands:
+To create a hyper app service in the cloud, go to https://dashboard.hyper.io sign in with your github account
+and create a new application. When you create your new application, copy the connection string and place it in
+a `.env` file
 
-``` sh
-# change directory to hello-world
-cd hello-world
-# download hyper cli
-curl -O https://hyperland.s3.amazonaws.com/hyper
-# make it a executable
-chmod +x ./hyper
-# run service
-./hyper
 ```
-
----
-
-## Configuration
-
-In order for our ⚡️ `hyper-connect` ⚡️ client to know how to communicate with the hyper service, we 
-need to give the client a `Connect String`, for local development our connect string looks like
-a url: http://localhost:6363/mario-wiki-dev
+HYPER=[connection string here]
+```
 
 > NOTE: make sure you are in the `hello-world` directory in the workshops repo
 
-Let's create a development environment variable in a `.env` file.
-
-``` txt
-HYPER=http://localhost:6363/mario-wiki-dev
-```
-
-🖥 Now in a new terminal window, run the following command 
-
-``` sh
-deno run -A ./scripts/setup.js
-```
-
-This will create our development data service for hyper. If you click over to the hyper terminal window you should see that a Database was created.
-
-```
-DATA:CREATE_DB: {"date":"2021-10-04T17:39:00.946Z"}
-```
+---
 
 🚀 Now we are ready to start the server! 🚀
 
@@ -130,7 +101,7 @@ In your editor, open `api/create-characer.js` and lets do the following:
 - import hyper connect
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+import { hyper } from 'https://x.nest.land/hyper-connect@0.0.9/proxy.js'
 ```
 
 - call `data.add` to add the new character document
@@ -164,7 +135,7 @@ GET /api/characters/1
 In your editor open `api/get-character.js` and do the following:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+import { hyper } from 'https://x.nest.land/hyper-connect@0.0.9/proxy.js'
 
 export default async function (_req, res) {
   const character = await hyper.data.get(_req.params.id)
@@ -199,9 +170,9 @@ curl -X POST localhost:3000/api/characters -H 'content-type: application/json' \
 Get some characters
 
 ``` curl
-curl localhost:3000/api/characters/1 | npx json
-curl localhost:3000/api/characters/2 | npx json
-curl localhost:3000/api/characters/3 | npx json
+curl localhost:3000/api/characters/1 | npx prettyjson
+curl localhost:3000/api/characters/2 | npx prettyjson
+curl localhost:3000/api/characters/3 | npx prettyjson
 
 ```
 
@@ -218,7 +189,9 @@ able to create and read json documents with very clear commands.
 
 - [Subscribe to hyper videos](https://youtube.com/c/hypervideos)
 
-In the next workshops, we will learn about the list, remove, and update methods for the hyper data service.
+In the next workshop, we will learn about the list, remove, and update methods for the hyper data service.
+
+[Next Workshop](../connect)
 
 > DISCLAIMER: This is example code that is mainly created to demo the features of the hyper demo service as 
 > quickly as possible, when using hyper for production, please add the proper safety checks and handle 
