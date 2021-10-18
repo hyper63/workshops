@@ -41,6 +41,15 @@ We need to initialize our project, if you have not already, launch this project 
 * [Launch in Gitpod](https://gitpod.io#https://github.com/hyper63/workshops)
 * Setup Local hyper data service:
 
+Login in to https://dashboard.hyper.io and go to your 'mario-wiki-[initials]' app and copy the connection string.
+
+Create a `.env` file in the `query` folder and add your connection string as a HYPER env variable:
+
+```
+HYPER=[your connection string]
+```
+
+
 💻 In a new terminal do the following:
 
 ``` sh
@@ -137,5 +146,16 @@ check to see the related model exists first.
 
 ## Summary
 
+In this workshop, we looks at two advanced features of the hyper Data service, `bulk` and `query`. With `bulk` you can provide an array of documents and the bulk service can insert, update or remove these documents in a batch process. Using the `query` method, you can provide complex query filters against your data store in an object syntax. By combining these selectors you can narrow your returned list, which can be sorted and only return specific fields in the documents. The `query` method provides you a rich set of tools to create specific result sets.
 
+## Did you enjoy this workshop?
 
+- [Subscribe to hyper videos](https://youtube.com/c/hypervideos)
+
+In the next workshop, we will learn about the list, remove, and update methods for the hyper data service.
+
+[Next Workshop](../)
+
+> DISCLAIMER: This is example code that is mainly created to demo the features of the hyper demo service as 
+> quickly as possible, when using hyper for production, please add the proper safety checks and handle 
+> well structured error messages when returned from the service.

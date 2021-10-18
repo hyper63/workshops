@@ -247,3 +247,14 @@ data service.
 
 
 
+## Did you enjoy this workshop?
+
+- [Subscribe to hyper videos](https://youtube.com/c/hypervideos)
+
+In the next workshop, we will learn about the list, remove, and update methods for the hyper data service.
+
+[Next Workshop](../query)
+
+> DISCLAIMER: This is example code that is mainly created to demo the features of the hyper demo service as 
+> quickly as possible, when using hyper for production, please add the proper safety checks and handle 
+> well structured error messages when returned from the service.
