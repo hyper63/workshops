@@ -1,7 +1,7 @@
 // load .env file
-import "https://deno.land/x/dotenv/load.ts";
+import "dotenv";
 
-import { opine, json } from "https://deno.land/x/opine@1.8.0/mod.ts";
+import { opine, json } from "opine";
 
 import {
   get as handleGetCharacter,
@@ -37,13 +37,13 @@ app.get("/", function (req, res) {
 app.post('/api/characters', handleCreateCharacter)
 app.get('/api/characters/:id', handleGetCharacter)
 app.put('/api/characters/:id', handleUpdateCharacter)
-app.del('/api/characters/:id', handleRemoveCharacter)
+app.delete('/api/characters/:id', handleRemoveCharacter)
 app.get('/api/characters', handleListCharacters)
 
 app.post('/api/games', handleCreateGame)
 app.get('/api/games/:id', handleGetGame)
 app.put('/api/games/:id', handleUpdateGame)
-app.del('/api/games/:id', handleRemoveGame)
+app.delete('/api/games/:id', handleRemoveGame)
 app.get('/api/games', handleListGames)
 
 

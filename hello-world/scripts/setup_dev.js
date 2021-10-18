@@ -1,4 +1,4 @@
-import "https://deno.land/x/dotenv/load.ts";
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+import "dotenv";
+import { hyper } from 'hyper-connect'
 
 await hyper.data.create()

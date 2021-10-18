@@ -1,1 +1,1 @@
-deno run --allow-env --allow-net --allow-read --watch server.js
+deno run --allow-env --allow-net --allow-read --watch --import-map=import_map.json server.js

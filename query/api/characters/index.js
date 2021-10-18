@@ -1,4 +1,4 @@
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+import { hyper } from 'hyper-connect'
 
 export async function post(_req, res) {
   const result = await hyper.data.add(_req.body)

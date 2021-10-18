@@ -1,4 +1,4 @@
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+import { hyper } from 'hyper-connect'
 
 export async function get(_req, res) {
   const character = await hyper.data.get(_req.params.id)
