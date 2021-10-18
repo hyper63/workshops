@@ -101,7 +101,7 @@ In your editor, open `api/create-characer.js` and lets do the following:
 - import hyper connect
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.9/proxy.js'
+import { hyper } from 'hyper-connect'
 ```
 
 - call `data.add` to add the new character document
@@ -135,7 +135,7 @@ GET /api/characters/1
 In your editor open `api/get-character.js` and do the following:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.9/proxy.js'
+import { hyper } from 'hyper-connect'
 
 export default async function (_req, res) {
   const character = await hyper.data.get(_req.params.id)
