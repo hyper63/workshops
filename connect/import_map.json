@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "hyper-connect": "https://x.nest.land/hyper-connect@0.0.12/proxy.js",
+    "dotenv": "https://deno.land/x/dotenv/load.ts",
+    "opine": "https://deno.land/x/opine@1.8.0/mod.ts"
+  }
+} 
