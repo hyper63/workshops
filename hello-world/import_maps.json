@@ -1,5 +1,0 @@
-{
-  "imports": {
-    "hyper-connect": "https://x.nest.land/hyper-connect@0.0.12/proxy.js"
-  }
-}

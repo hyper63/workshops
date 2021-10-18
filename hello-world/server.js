@@ -1,7 +1,7 @@
 // load .env file
-import "https://deno.land/x/dotenv/load.ts";
+import "dotenv";
 
-import { opine, json } from "https://deno.land/x/opine@1.8.0/mod.ts";
+import { opine, json } from "opine";
 import handleGetCharacter from './api/get-character.js'
 import handleCreateCharacter from './api/create-character.js'
 

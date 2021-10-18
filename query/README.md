@@ -74,7 +74,7 @@ In the `api/characters/_query.js` file, lets modify the `post` function to perfo
 query.
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.7/proxy.js'
+import { hyper } from 'hyper-connect'
 
 export async function post(_req, res) {
   // 📝 NOTE: you may want to check if the game_id document exists

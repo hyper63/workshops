@@ -121,7 +121,7 @@ send a full document to hyper.
 In the `api/update-character.js` file, lets re-write the updateCharacter API handler:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.9/proxy.js'
+import { hyper } from 'hyper-connect'
 
 export default async function(req, res) {
   const result = await hyper.data.update(req.params.id, req.body)
@@ -146,7 +146,7 @@ curl -X PUT localhost:3000/api/characters/1 \
 To remove a document from a hyper data service, we will use the `data.remove` method. In `api/remove-character.js` lets re-write the function like so:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connnect@0.0.9/proxy.js'
+import { hyper } from 'hyper-connect'
 
 export default async function(req, res) {
   const result = await hyper.data.remove(req.params.id)
@@ -213,7 +213,7 @@ documents that are type 'character'
 In your editor open `api/list-characters.js` and re-write the function:
 
 ``` js
-import { hyper } from 'https://x.nest.land/hyper-connect@0.0.9/proxy.js'
+import { hyper } from 'hyper-connect'
 
 const byType = doctype => doc => doc.type === doctype
 
