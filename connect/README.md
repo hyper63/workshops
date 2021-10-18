@@ -134,7 +134,7 @@ To verify the update is successful, let's use curl to send an update:
 In a new terminal window:
 
 ``` sh
-curl -X PUT localhost:3000/api/characters/1 \
+curl -X PUT localhost:3000/api/characters/character-1 \
 -H 'Content-Type: application/json' \
 -d '{"id": "1", "type": "character", "name": "Mario", "description": "updating mario document" }'
 ```
@@ -158,7 +158,7 @@ export default async function(req, res) {
 And we can verify using curl
 
 ``` sh
-curl -X DELETE localhost:3000/api/characters/1
+curl -X DELETE localhost:3000/api/characters/character-1
 ```
 
 ---

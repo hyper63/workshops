@@ -170,9 +170,9 @@ curl -X POST localhost:3000/api/characters -H 'content-type: application/json' \
 Get some characters
 
 ``` curl
-curl localhost:3000/api/characters/1 | npx prettyjson
-curl localhost:3000/api/characters/2 | npx prettyjson
-curl localhost:3000/api/characters/3 | npx prettyjson
+curl localhost:3000/api/characters/character-1 | npx prettyjson
+curl localhost:3000/api/characters/character-2 | npx prettyjson
+curl localhost:3000/api/characters/character-3 | npx prettyjson
 
 ```
 
