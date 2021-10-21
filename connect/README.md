@@ -71,19 +71,22 @@ For example, if I call `await hyper.data.update(...)`, `hyper-connect` takes the
 
 
 ```
-PUT /data/mario-wiki-dev/1
-Host: localhost:6363
+PUT /data/mario-wiki-dev/character-1
+Host: cloud.hyper.io
 Content-Type: application/json
 Authorization: Bearer ${token}
 
 {
-  "id": "1",
+  "id": "character-1",
   "name": "Mario",
-  "description": "Better description"
+  "description": "Mario is the central character of the Mario universe and is a plumber by trade."
 }
 ```
 
-`hyper-connect` also handles the response and returns the result. If the response is not a 2XX response, a rejected promise is returned with the error supplied as the argument in the catch function.
+`hyper-connect` also handles the response and returns the result. If the response is not a 2XX response, 
+a rejected promise is returned with the error supplied as the argument in the catch function.
+
+> 🗒 For more information about `hyper-connect` check out our documentation: https://docs.hyper.io/cloud/hyper-connect
 
 ---
 
@@ -198,13 +201,13 @@ const xs = await hyper.data.list({limit: 10})
 ### List with a key range
 
 ``` js
-const xs = await hyper.data.list({start: '2', end: '3' })
+const xs = await hyper.data.list({start: 'character-2', end: 'character-3' })
 ```
 
 ### List with a set of keys
 
 ``` js
-const xs = await hyper.data.list({keys: ['1', '3', '4']})
+const xs = await hyper.data.list({keys: ['character-1', 'character-3', 'character-4']})
 ```
 
 For our API, we are going to list all of the documents, then filter 
@@ -218,7 +221,7 @@ import { hyper } from 'hyper-connect'
 const byType = doctype => doc => doc.type === doctype
 
 export default async function (_req, res) {
-  const docs = await hyper.data.list()
+  const { docs } = await hyper.data.list()
   const characters = docs.filter(byType('character'))
   return res.send(characters)
 }
