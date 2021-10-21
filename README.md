@@ -14,7 +14,7 @@ The best way to do these workshops is to use gitpod.io
 ### Data
 
 - [✅ Hello World](/hello-world)
-- [✨ Connect](/connect)
+- [✅ Connect](/connect)
 - [⚙️ Query](/query)
 
 ### Storage
