@@ -7,7 +7,7 @@
 
 The best way to do these workshops is to use gitpod.io
 
-[Launch Workspace](https://gitpod.io#https://github.com/hyper63/workshops/tree/master)
+🚀[Launch Workspace](https://gitpod.io#https://github.com/hyper63/workshops/tree/master) 🚀
 
 ## Workshops
 
