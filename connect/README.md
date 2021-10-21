@@ -201,7 +201,7 @@ const xs = await hyper.data.list({limit: 10})
 ### List with a key range
 
 ``` js
-const xs = await hyper.data.list({start: 'character-2', end: 'character-3' })
+const xs = await hyper.data.list({startkey: 'character-2', endkey: 'character-3' })
 ```
 
 ### List with a set of keys
