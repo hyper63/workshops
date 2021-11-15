@@ -96,7 +96,7 @@ Example:
 }
 ```
 
-In your editor, open `api/create-characer.js` and lets do the following:
+In your editor, open `api/create-character.js` and lets do the following:
 
 - import hyper connect
 
