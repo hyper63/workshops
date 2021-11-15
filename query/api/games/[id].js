@@ -1,4 +1,6 @@
-import { hyper } from 'hyper-connect'
+import { connect } from 'hyper-connect'
+
+const hyper = connect(Deno.env.get('HYPER'))
 
 export async function get(_req, res) {
   const game = await hyper.data.get(_req.params.id)

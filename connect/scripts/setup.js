@@ -1,5 +1,7 @@
 import "dotenv";
-import { hyper } from 'hyper-connect'
+import { connect } from 'hyper-connect'
+
+const hyper = connect(Deno.env.get('HYPER'))
 
 const characters = [
   {

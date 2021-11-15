@@ -124,7 +124,9 @@ send a full document to hyper.
 In the `api/update-character.js` file, lets re-write the updateCharacter API handler:
 
 ``` js
-import { hyper } from 'hyper-connect'
+import { connect } from 'hyper-connect'
+
+const hyper = connect(Deno.env.get['HYPER'])
 
 export default async function(req, res) {
   const result = await hyper.data.update(req.params.id, req.body)
@@ -149,7 +151,9 @@ curl -X PUT localhost:3000/api/characters/character-1 \
 To remove a document from a hyper data service, we will use the `data.remove` method. In `api/remove-character.js` lets re-write the function like so:
 
 ``` js
-import { hyper } from 'hyper-connect'
+import { connect } from 'hyper-connect'
+
+const hyper = connect(Deno.env.get['HYPER'])
 
 export default async function(req, res) {
   const result = await hyper.data.remove(req.params.id)
@@ -216,7 +220,9 @@ documents that are type 'character'
 In your editor open `api/list-characters.js` and re-write the function:
 
 ``` js
-import { hyper } from 'hyper-connect'
+import { connect } from 'hyper-connect'
+
+const hyper = connect(Deno.env.get['HYPER'])
 
 const byType = doctype => doc => doc.type === doctype
 
