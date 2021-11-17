@@ -79,6 +79,11 @@ cd query
 
 ## Query and Bulk
 
+The two advanced commands of hyper's data API are `query` and `bulk`, the
+`query` command allows you to create a set of filters for you documents, using
+document properties and comparing values. The bulk command allows you to insert,
+update, or remove multiple documents in one request.
+
 ### Query
 
 As we continue to build our API, we want to provide the ability to find all the
@@ -170,8 +175,88 @@ curl -X POST localhost:3000/api/games/_query?character_id=character-1 | npx pret
 
 Refactor create/update [characters, games]
 
-This refactor should use bulk to add the model, plus the relation table, maybe
-check to see the related model exists first.
+Lets use the bulk feature to add more characters, games and appearances.
+
+Lets create a new file called `bulk.js` 
+
+First, we will need to create an array of objects that would would like to
+insert/update:
+
+```js
+const data = [
+  {
+    id: 'character-10', 
+    type: 'character',
+    name: 'Toad',
+  }, {
+    id: 'character-11',
+    type: 'character',
+    name: 'Yoshi'
+  }, {
+    id: 'character-12',
+    type: 'character',
+    name:  'Princess Daisy'
+  }, {
+    id: 'game-10',
+    type: 'game',
+    name: 'Super Mario Land'
+  }, {
+    id: 'game-11',
+    type: 'game',
+    name: 'Youshi\'s Island'
+  }, {
+    id: 'appearance-10',
+    type: 'appearance',
+    game: {
+      id: 'game-10',
+      name: 'Super Mario Land'
+    },
+    character: {
+      id: 'character-12',
+      name: 'Princess Daisy'
+    }
+  }]
+```
+
+Now, lets import `hyper-connect` at the top of the file.
+
+``` js
+import 'dotenv'
+import { connect } from 'hyper-connect'
+
+const hyper = connect(Deno.env.get('HYPER'))
+
+```
+
+And after the data, lets add our code to call the bulk command:
+
+``` js
+console.log(
+  await hyper.data.bulk(data)
+)
+```
+
+Run it!
+
+``` sh
+deno -A --unstable --import-map=import_map.json bulk.js
+```
+
+Yay! We just inserted or updated documents into our hyper data service.
+
+If you want to delete any documents via a batch you simply include a `_deleted` flag with the value of `true`.
+
+``` js
+await hyper.data.bulk([
+  {
+    id: 'appearance-10',
+    _deleted: true
+  }
+])
+```
+
+This is nice, because if you want to delete.
+
 
 ---
 
@@ -199,3 +284,4 @@ for the hyper data service.
 > of the hyper demo service as quickly as possible, when using hyper for
 > production, please add the proper safety checks and handle well structured
 > error messages when returned from the service.
+```
