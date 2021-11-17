@@ -12,25 +12,28 @@ The best way to do these workshops is to use gitpod.io
 
 ## Workshops
 
+> Workshop status: ✅ - Ready | ⚙️ - In Progress | 🔮 - Todo
+
 ### Data
 
-- [✅ Hello World](/hello-world)
-- [✅ Connect](/connect)
-- [⚙️ Query](/query)
+- [✅ Hello World](/data-hello-world)
+- [✅ Connect](/data-connect)
+- [✅ Query](/data-query)
+
+### Cache
+
+- [⚙️ Counters](/cache-counters)
+- [🔮 Hot Queries](/cache-hot-queries)
+
+### Search
+
+- [🔮 Indexing](/search-indexing)
+- [🔮 Matches](/search-matching)
 
 ### Storage
 
 - [🔮 Uploading Files](/upload)
 - [🔮 Downloading Files](/download)
-
-### Cache
-
-- [🔮 Counters](/counters)
-- [🔮 Hot Queries](/hot-queries)
-
-### Search
-
-- [🔮 Search](/search)
 
 ### Queue
 
