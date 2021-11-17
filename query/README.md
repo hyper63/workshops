@@ -177,7 +177,7 @@ Refactor create/update [characters, games]
 
 Lets use the bulk feature to add more characters, games and appearances.
 
-Lets create a new file called `bulk.js` 
+Lets create a new file called `bulk.js`
 
 First, we will need to create an array of objects that would would like to
 insert/update:
@@ -185,78 +185,101 @@ insert/update:
 ```js
 const data = [
   {
-    id: 'character-10', 
-    type: 'character',
-    name: 'Toad',
-  }, {
-    id: 'character-11',
-    type: 'character',
-    name: 'Yoshi'
-  }, {
-    id: 'character-12',
-    type: 'character',
-    name:  'Princess Daisy'
-  }, {
-    id: 'game-10',
-    type: 'game',
-    name: 'Super Mario Land'
-  }, {
-    id: 'game-11',
-    type: 'game',
-    name: 'Youshi\'s Island'
-  }, {
-    id: 'appearance-10',
-    type: 'appearance',
+    id: "character-10",
+    type: "character",
+    name: "Toad",
+  },
+  {
+    id: "character-11",
+    type: "character",
+    name: "Yoshi",
+  },
+  {
+    id: "character-12",
+    type: "character",
+    name: "Princess Daisy",
+  },
+  {
+    id: "game-10",
+    type: "game",
+    name: "Super Mario Land",
+  },
+  {
+    id: "game-11",
+    type: "game",
+    name: "Youshi's Island",
+  },
+  {
+    id: "appearance-10",
+    type: "appearance",
     game: {
-      id: 'game-10',
-      name: 'Super Mario Land'
+      id: "game-10",
+      name: "Super Mario Land",
     },
     character: {
-      id: 'character-12',
-      name: 'Princess Daisy'
-    }
-  }]
+      id: "character-12",
+      name: "Princess Daisy",
+    },
+  },
+];
 ```
 
 Now, lets import `hyper-connect` at the top of the file.
 
-``` js
-import 'dotenv'
-import { connect } from 'hyper-connect'
+```js
+import "dotenv";
+import { connect } from "hyper-connect";
 
-const hyper = connect(Deno.env.get('HYPER'))
-
+const hyper = connect(Deno.env.get("HYPER"));
 ```
 
 And after the data, lets add our code to call the bulk command:
 
-``` js
+```js
 console.log(
-  await hyper.data.bulk(data)
-)
+  await hyper.data.bulk(data),
+);
 ```
 
 Run it!
 
-``` sh
+```sh
 deno -A --unstable --import-map=import_map.json bulk.js
 ```
 
 Yay! We just inserted or updated documents into our hyper data service.
 
-If you want to delete any documents via a batch you simply include a `_deleted` flag with the value of `true`.
+If you want to delete any documents via a batch you simply include a `_deleted`
+flag with the value of `true`.
 
-``` js
+```js
 await hyper.data.bulk([
   {
-    id: 'appearance-10',
-    _deleted: true
-  }
-])
+    id: "appearance-10",
+    _deleted: true,
+  },
+]);
 ```
 
-This is nice, because if you want to delete.
+This is nice, because if you want to delete some documents, you can compose a
+query, then a map function then a bulk.
 
+Here is an example that could be to remove all related appearances when a game
+is deleted.
+
+```js
+const assoc = (key, value) =>
+  (obj) => {
+    obj[key] = value;
+    return obj;
+  };
+
+return hyper.data.query({ type: "appearance", "game.id": "game-1" })
+  .then((result) => result.docs)
+  .then((docs) => docs.map(assoc("_deleted", true)))
+  .then(hyper.data.bulk)
+  .then((result) => hyper.data.remove("game-1"));
+```
 
 ---
 
@@ -284,4 +307,6 @@ for the hyper data service.
 > of the hyper demo service as quickly as possible, when using hyper for
 > production, please add the proper safety checks and handle well structured
 > error messages when returned from the service.
+
+```
 ```
