@@ -1,14 +1,12 @@
-import { connect } from "hyper-connect";
+const byType = t => doc => doc.type === t
 
-const hyper = connect(Deno.env.get("HYPER"));
-
-export async function post(_req, res) {
-  const result = await hyper.data.add(_req.body);
+export async function post({hyper, body}, res) {
+  const result = await hyper.data.add(body);
   return res.send(result);
 }
 
-export async function get(_req, res) {
-  const docs = await hyper.data.list();
+export async function get({hyper}, res) {
+  const {docs} = await hyper.data.list();
   const games = docs.filter(byType("game"));
   return res.send(games);
 }
