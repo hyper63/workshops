@@ -1,4 +1,4 @@
 import "dotenv";
-import { hyper } from 'hyper-connect'
+import { hyper } from "hyper-connect";
 
-await hyper.data.create()
+await hyper.data.create();

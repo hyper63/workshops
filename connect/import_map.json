@@ -4,4 +4,4 @@
     "dotenv": "https://deno.land/x/dotenv/load.ts",
     "opine": "https://deno.land/x/opine@1.8.0/mod.ts"
   }
-} 
+}

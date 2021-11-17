@@ -1,53 +1,51 @@
 // load .env file
 import "dotenv";
 
-import { opine, json } from "opine";
+import { json, opine } from "opine";
 
 import {
+  del as handleRemoveCharacter,
   get as handleGetCharacter,
   put as handleUpdateCharacter,
-  del as handleRemoveCharacter,
-} from './api/characters/[id].js'
+} from "./api/characters/[id].js";
 
 import {
+  get as handleListCharacters,
   post as handleCreateCharacter,
-  get as handleListCharacters
-} from './api/characters/index.js'
+} from "./api/characters/index.js";
 
 import {
+  del as handleRemoveGame,
   get as handleGetGame,
   put as handleUpdateGame,
-  del as handleRemoveGame,
-} from './api/games/[id].js'
+} from "./api/games/[id].js";
 
 import {
+  get as handleListGames,
   post as handleCreateGame,
-  get as handleListGames
-} from './api/games/index.js'
+} from "./api/games/index.js";
 
+const app = opine();
 
-const app = opine()
-
-app.use(json())
+app.use(json());
 
 app.get("/", function (req, res) {
-  res.send({ name: 'Mario Wiki API' });
+  res.send({ name: "Mario Wiki API" });
 });
 
-app.post('/api/characters', handleCreateCharacter)
-app.get('/api/characters/:id', handleGetCharacter)
-app.put('/api/characters/:id', handleUpdateCharacter)
-app.delete('/api/characters/:id', handleRemoveCharacter)
-app.get('/api/characters', handleListCharacters)
+app.post("/api/characters", handleCreateCharacter);
+app.get("/api/characters/:id", handleGetCharacter);
+app.put("/api/characters/:id", handleUpdateCharacter);
+app.delete("/api/characters/:id", handleRemoveCharacter);
+app.get("/api/characters", handleListCharacters);
 
-app.post('/api/games', handleCreateGame)
-app.get('/api/games/:id', handleGetGame)
-app.put('/api/games/:id', handleUpdateGame)
-app.delete('/api/games/:id', handleRemoveGame)
-app.get('/api/games', handleListGames)
+app.post("/api/games", handleCreateGame);
+app.get("/api/games/:id", handleGetGame);
+app.put("/api/games/:id", handleUpdateGame);
+app.delete("/api/games/:id", handleRemoveGame);
+app.get("/api/games", handleListGames);
 
-
-app.all('*', (_req, res) => res.setStatus(404).send({ msg: 'not found' }))
+app.all("*", (_req, res) => res.setStatus(404).send({ msg: "not found" }));
 
 app.listen(
   3000,
