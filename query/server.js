@@ -1,5 +1,6 @@
 // load .env file
 import "dotenv";
+import { connect } from 'hyper-connect'
 
 import { json, opine } from "opine";
 
@@ -25,9 +26,12 @@ import {
   post as handleCreateGame,
 } from "./api/games/index.js";
 
+const hyper = connect(Deno.env.get('HYPER'))
 const app = opine();
 
 app.use(json());
+// inject hyper instance into request object
+app.use((req, _res, next) => { req.hyper = hyper; next()})
 
 app.get("/", function (req, res) {
   res.send({ name: "Mario Wiki API" });

@@ -105,16 +105,12 @@ In the `api/characters/_query.js` file, lets modify the `post` function to
 perform this query.
 
 ```js
-import { connect } from "hyper-connect";
-
-const hyper = connect(Deno.env.get("HYPER"));
-
-export async function post(_req, res) {
+export async function post({ hyper, query }, res) {
   // 📝 NOTE: you may want to check if the game_id document exists
   // before running the query.
   const result = await hyper.data.query({
     type: "appearance",
-    "game.id": req.query.game_id,
+    "game.id": query.game_id,
   }, { fields: ["character"] });
 
   return res.send(result.docs);
@@ -307,6 +303,3 @@ for the hyper data service.
 > of the hyper demo service as quickly as possible, when using hyper for
 > production, please add the proper safety checks and handle well structured
 > error messages when returned from the service.
-
-```
-```
