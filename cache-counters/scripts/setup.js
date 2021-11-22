@@ -99,3 +99,11 @@ const appearances = [
 console.log(
   await hyper.data.bulk(appearances),
 );
+
+
+console.log(
+  await hyper.cache.add({ 
+    characters: 4,
+    games: 4
+  })
+)
