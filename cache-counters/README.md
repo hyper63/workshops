@@ -113,20 +113,23 @@ the stats document, store the document in the cache and return the results.
 `api/stats.js`
 
 ```js
-const of = Promise.resolve
-export async function get({hyper), res}) {
-  of('stats')
-    .then(hyper.cache.get)
-    // query data service if cache counters not found
-    .catch(() => 
-      hyper.data.query({$or: [{type: 'character'}, {type: 'game'}]})
-        .then(result => result.docs.reduce((a, d) => {
-          a[d.type] = a[d.type] + 1
-          return a 
-        }, {game: 0, character: 0}))
-    )
-    .then(stats => res.send(stats))
-    
+function aggregateCounters(acc, doc) {
+  if (Object.keys(acc).includes(doc.type)) {
+    acc[doc.type] = acc[doc.type] + 1;
+  }
+  return acc;
+}
+
+export async function get({ hyper }, res) {
+  function queryCounters() {
+    return hyper.data.list({ limit: 1000 })
+      .then(({ docs }) =>
+        docs.reduce(aggregateCounters, { game: 0, character: 0 })
+      );
+  }
+  const result = await hyper.cache.get("counters").catch(queryCounters);
+
+  res.send(result);
 }
 ```
 
@@ -144,22 +147,18 @@ stats document.
 `api/characters/index.js`
 
 ```js
-import { always, inc, lensProp, over } from "ramda";
-
-const of = Promise.resolve;
-
 export async function post({ hyper, body }, res) {
-  const setStats = (type) =>
-    (doc) => hyper.cache.set("stats", over(lensProp(type), inc, doc));
-  const incrementStats = (type) =>
-    hyper.cache.get("stats").then(setStats(type));
-
-  const result = await of(body)
-    .then(hyper.data.add)
-    .then(
-      (result) => incrementStats("character").then(always(result)),
-    );
-
+  function increment(result) {
+    return hyper.cache.get("counters")
+      .then((counters) =>
+        hyper.cache.set("counters", {
+          ...counters,
+          character: counters.character + 1,
+        })
+      )
+      .then(() => result);
+  }
+  const result = await hyper.data.add(body).then(increment);
   return res.send(result);
 }
 ```
@@ -167,22 +166,15 @@ export async function post({ hyper, body }, res) {
 `api/games/index.js`
 
 ```js
-import { always, inc, lensProp, over } from "ramda";
-
-const of = Promise.resolve;
-
 export async function post({ hyper, body }, res) {
-  const setStats = (type) =>
-    (doc) => hyper.cache.set("stats", over(lensProp(type), inc, doc));
-  const incrementStats = (type) =>
-    hyper.cache.get("stats").then(setStats(type));
-
-  const result = await of(body)
-    .then(hyper.data.add)
-    .then(
-      (result) => incrementStats("game").then(always(result)),
-    );
-
+  function increment(result) {
+    return hyper.cache.get("counters")
+      .then((counters) =>
+        hyper.cache.set("counters", { ...counters, game: counters.game + 1 })
+      )
+      .then(() => result);
+  }
+  const result = await hyper.data.add(body).then(increment);
   return res.send(result);
 }
 ```
@@ -199,22 +191,18 @@ stats model, so that we can keep the cache accurate and fresh.
 `api/characters/[id].js`
 
 ```js
-import { always, dec, lensProp, over } from "ramda";
-
-const of = Promise.resolve;
-
-export async function delete({ hyper, body }, res) {
-  const setStats = (type) =>
-    (doc) => hyper.cache.set("stats", over(lensProp(type), dec, doc));
-  const decrementStats = (type) =>
-    hyper.cache.get("stats").then(setStats(type));
-
-  const result = await of(body)
-    .then(hyper.data.remove)
-    .then(
-      (result) => decrementStats("character").then(always(result)),
-    );
-
+export async function del({ hyper, params }, res) {
+  function decrement(result) {
+    return hyper.cache.get("counters")
+      .then((counters) =>
+        hyper.cache.set("counters", {
+          ...counters,
+          character: counters.character - 1,
+        })
+      )
+      .then(() => result);
+  }
+  const result = await hyper.data.remove(params.id).then(decrement);
   return res.send(result);
 }
 ```
@@ -222,24 +210,17 @@ export async function delete({ hyper, body }, res) {
 `api/games/[id].js`
 
 ```js
-import { always, dec, lensProp, over } from "ramda";
-
-const of = Promise.resolve;
-
-export async function delete({ hyper, body }, res) {
-  const setStats = (type) =>
-    (doc) => hyper.cache.set("stats", over(lensProp(type), dec, doc));
-  const decrementStats = (type) =>
-    hyper.cache.get("stats").then(setStats(type));
-
-  const result = await of(body)
-    .then(hyper.data.remove)
-    .then(
-      (result) => decrementStats("game").then(always(result)),
-    );
-
+export async function del({ hyper, params }, res) {
+  function decrement (result) {
+    return hyper.cache.get('counters')
+      .then(counters => 
+        hyper.cache.set('counters', {...counters, game: counters.game - 1 })
+      )
+      .then(() => result)
+  }
+  const result = await hyper.data.remove(params.id).then(decrement);
   return res.send(result);
-}
+}}
 ```
 
 ### Advanced
@@ -260,63 +241,78 @@ When instanciating hyper-connect, we get a hyper object, we will extend that
 object adding an `ext` property and then adding `counters` to the extension
 property.
 
-````js
-const of = Promise.resolve
+create a new folder called `services` and a new file within the folder called
+`counters.js`
+
+`services/counters.js`
+
+```js
+const of = Promise.resolve;
 
 export default function (hyper) {
-  const getCounter = k => hyper.cache.get(k).then(v => ([k, v]))
-  const incCounter = ([k,v]) => hyper.cache.set(k, v + 1)
-  const decCounter = ([k,v]) => hyper.cache.set(k, v - 1)
-  const always = v => () => v
-  const aggregateCounters = (acc, doc) => ({...acc, [doc.key]: doc.value})
+  const getCounter = (k) => hyper.cache.get(k).then((v) => ([k, v]));
+  const incCounter = ([k, v]) => hyper.cache.set(k, v + 1);
+  const decCounter = ([k, v]) => hyper.cache.set(k, v - 1);
+  const always = (v) => () => v;
+  const aggregateCounters = (acc, doc) => ({ ...acc, [doc.key]: doc.value });
 
-  function inc (key) {
+  function inc(key) {
     return function (x) {
       if (x.ok) {
-        return ok(`counters-${key}`) 
+        return ok(`counters-${key}`)
           .then(getCounter)
           .then(setCounter)
-          .then(always(x))
+          .then(always(x));
       }
-      return Promise.reject(x)
-    }
+      return Promise.reject(x);
+    };
   }
 
-  function dec (key) {
+  function dec(key) {
     return function (x) {
       if (x.ok) {
-        return ok(key) 
+        return ok(key)
           .then(getCounter)
           .then(decCounter)
-          .then(always(x))
+          .then(always(x));
       }
-      return Promise.reject(x)
-    }
+      return Promise.reject(x);
+    };
   }
 
-  function counts () {
-    return hyper.cache.query('counters-*')
-      .reduce(aggregateCounters, {})
+  function counts() {
+    return hyper.cache.query("counters-*")
+      .reduce(aggregateCounters, {});
   }
 
   hyper = {
     ...hyper,
-    ext : {
+    ext: {
       ...hyper.ext,
       counters: {
         inc,
         dec,
-        counts
-      }
-    }
-  }
+        counts,
+      },
+    },
+  };
 
-  return hyper
+  return hyper;
 }
+```
 
 By creating this extension and attaching it to the hyper object when assigned to
 the request object, we can make these helper functions available to the endpoint
 handlers and dramatically simplify the code.
+
+`server.js`
+
+```js
+import counters from './services/counters.'
+...
+// compose counters ext on hyper-connect
+const hyper = compose(counters, connect)(Deno.env.get('HYPER'))
+```
 
 `api/stats.js`
 
@@ -326,7 +322,7 @@ export async function get({hyper), res}) {
   const result = await hyper.ext.counters.counts()
   return res.send(result)    
 }
-````
+```
 
 `api/games/index.js`
 

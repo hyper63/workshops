@@ -26,6 +26,10 @@ import {
   post as handleCreateGame,
 } from "./api/games/index.js";
 
+import {
+  get as handleStats
+} from './api/stats.js'
+
 const hyper = connect(Deno.env.get('HYPER'))
 const app = opine();
 
@@ -48,6 +52,8 @@ app.get("/api/games/:id", handleGetGame);
 app.put("/api/games/:id", handleUpdateGame);
 app.delete("/api/games/:id", handleRemoveGame);
 app.get("/api/games", handleListGames);
+
+app.get('/api/stats', handleStats)
 
 app.all("*", (_req, res) => res.setStatus(404).send({ msg: "not found" }));
 

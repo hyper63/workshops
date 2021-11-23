@@ -102,8 +102,8 @@ console.log(
 
 
 console.log(
-  await hyper.cache.add({ 
-    characters: 4,
-    games: 4
+  await hyper.cache.add('counters', { 
+    character: 4,
+    game: 4
   })
 )

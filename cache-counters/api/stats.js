@@ -1,3 +1,3 @@
-export async function post(_req, res) {
-  res.setStatus(501).send({ msg: "Not Implemented!" });
+export async function get({hyper}, res) {
+  res.setStatus(501).send({mgs: 'Not Implemented!'})
 }
