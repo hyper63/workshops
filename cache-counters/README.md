@@ -254,7 +254,65 @@ hyper.ext.counters.dec(key);
 hyper.ext.counters.counts();
 ```
 
-TODO: Generic Implementation
+### hyper-connect extensions
+
+When instanciating hyper-connect, we get a hyper object, we will extend that
+object adding an `ext` property and then adding `counters` to the extension
+property.
+
+````js
+const of = Promise.resolve
+
+export default function (hyper) {
+  const getCounter = k => hyper.cache.get(k).then(v => ([k, v]))
+  const incCounter = ([k,v]) => hyper.cache.set(k, v + 1)
+  const decCounter = ([k,v]) => hyper.cache.set(k, v - 1)
+  const always = v => () => v
+  const aggregateCounters = (acc, doc) => ({...acc, [doc.key]: doc.value})
+
+  function inc (key) {
+    return function (x) {
+      if (x.ok) {
+        return ok(`counters-${key}`) 
+          .then(getCounter)
+          .then(setCounter)
+          .then(always(x))
+      }
+      return Promise.reject(x)
+    }
+  }
+
+  function dec (key) {
+    return function (x) {
+      if (x.ok) {
+        return ok(key) 
+          .then(getCounter)
+          .then(decCounter)
+          .then(always(x))
+      }
+      return Promise.reject(x)
+    }
+  }
+
+  function counts () {
+    return hyper.cache.query('counters-*')
+      .reduce(aggregateCounters, {})
+  }
+
+  hyper = {
+    ...hyper,
+    ext : {
+      ...hyper.ext,
+      counters: {
+        inc,
+        dec,
+        counts
+      }
+    }
+  }
+
+  return hyper
+}
 
 By creating this extension and attaching it to the hyper object when assigned to
 the request object, we can make these helper functions available to the endpoint
@@ -268,7 +326,7 @@ export async function get({hyper), res}) {
   const result = await hyper.ext.counters.counts()
   return res.send(result)    
 }
-```
+````
 
 `api/games/index.js`
 
