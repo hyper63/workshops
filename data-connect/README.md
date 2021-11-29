@@ -166,7 +166,7 @@ In a new terminal window:
 ```sh
 curl -X PUT localhost:3000/api/characters/character-1 \
 -H 'Content-Type: application/json' \
--d '{"id": "1", "type": "character", "name": "Mario", "description": "updating mario document" }'
+-d '{"id": "character-1", "type": "character", "name": "Mario", "description": "updating mario document" }'
 ```
 
 ---
