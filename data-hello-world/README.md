@@ -1,6 +1,8 @@
 <h1 align="center">👋🏻 Hello World Workshop 👋🏻</h1>
 <p align="center">The hyper "hello world" workshop</p>
 
+> The future Blueberry release is scheduled for 1/17/2022.  It will include a swap of the id field to the _id field for the primary key on data documents. 
+
 ---
 
 - [Introduction](#introduction)
@@ -92,7 +94,7 @@ I want to send a JSON Document
 Example:
 
 {
-  "id": "character-1",
+  "_id": "character-1",
   "type": "character",
   "name": "Mario",
   "description": "The most popular character in the Mario Universe"
@@ -160,15 +162,15 @@ Add some characters
 
 ```curl
 curl -X POST localhost:3000/api/characters -H 'content-type: application/json' \
--d '{"id": "character-1", "name": "Mario", "description": "Leading character in Mario Universe" }'
+-d '{"_id": "character-1", "name": "Mario", "description": "Leading character in Mario Universe" }'
 
 
 curl -X POST localhost:3000/api/characters -H 'content-type: application/json' \
--d '{"id": "character-2", "name": "Luigi", "description": "Marios partner" }'
+-d '{"_id": "character-2", "name": "Luigi", "description": "Marios partner" }'
 
 
 curl -X POST localhost:3000/api/characters -H 'content-type: application/json' \
--d '{"id": "character-3", "name": "Bowser", "description": "Marios number one enemy" }'
+-d '{"_id": "character-3", "name": "Bowser", "description": "Marios number one enemy" }'
 ```
 
 Get some characters

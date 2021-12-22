@@ -2,6 +2,8 @@
 <p align="center">In this workshop, we will explore the hyper Data query and bulk service methods. With these two powerful methods you can
 accomplish so much of your complex data needs without having to tightly couple your business logic to the persistent data service.</p>
 
+> The future Blueberry release is scheduled for 1/17/2022.  It will include a swap of the id field to the _id field for the primary key on data documents. 
+
 ---
 
 ## Table of Contents
@@ -181,32 +183,32 @@ insert/update:
 ```js
 const data = [
   {
-    id: "character-10",
+    _id: "character-10",
     type: "character",
     name: "Toad",
   },
   {
-    id: "character-11",
+    _id: "character-11",
     type: "character",
     name: "Yoshi",
   },
   {
-    id: "character-12",
+    _id: "character-12",
     type: "character",
     name: "Princess Daisy",
   },
   {
-    id: "game-10",
+    _id: "game-10",
     type: "game",
     name: "Super Mario Land",
   },
   {
-    id: "game-11",
+    _id: "game-11",
     type: "game",
     name: "Youshi's Island",
   },
   {
-    id: "appearance-10",
+    _id: "appearance-10",
     type: "appearance",
     game: {
       id: "game-10",
@@ -251,7 +253,7 @@ flag with the value of `true`.
 ```js
 await hyper.data.bulk([
   {
-    id: "appearance-10",
+    _id: "appearance-10",
     _deleted: true,
   },
 ]);
