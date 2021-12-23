@@ -1,21 +1,21 @@
 [
   {
-    "id": "1",
+    "_id": "1",
     "type": "character",
     "name": "Mario"
   },
   {
-    "id": "2",
+    "_id": "2",
     "type": "character",
     "name": "Luigi"
   },
   {
-    "id": "3",
+    "_id": "3",
     "type": "character",
     "name": "Princess Peach"
   },
   {
-    "id": "4",
+    "_id": "4",
     "type": "character",
     "name": "Bowser"
   }

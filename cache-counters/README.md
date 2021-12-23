@@ -308,7 +308,7 @@ handlers and dramatically simplify the code.
 `server.js`
 
 ```js
-import counters from './services/counters.'
+import counters from './services/counters.js'
 ...
 // compose counters ext on hyper-connect
 const hyper = compose(counters, connect)(Deno.env.get('HYPER'))
